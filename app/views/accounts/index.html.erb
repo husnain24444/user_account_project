@@ -1,0 +1,32 @@
+<h1>Accounts</h1>
+
+<% if current_user.has_role?(:admin) %>
+  <p>Welcome Admin: <%= current_user.username %></p>
+<% else %>
+  <p>Welcome User: <%= current_user.username %></p>
+<% end %>
+
+<% if @accounts.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @accounts.each do |account| %>
+        <tr>
+          <td><%= account.name %></td>
+          <td>
+            <%= link_to 'Show', account_path(account) %> |
+            <%= link_to 'Edit', edit_account_path(account) %> |
+            <%= link_to 'Delete', account_path(account), method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No accounts found.</p>
+<% end %>
